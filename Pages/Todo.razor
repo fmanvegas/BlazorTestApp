@@ -1,0 +1,32 @@
+﻿@page "/todo"
+
+<h3>Todo (@handles.Count(todo => !todo.IsDone))</h3>
+
+<ul>
+    @foreach (var todo in handles)
+    {
+        <li>
+            <h6>@todo.Handle</h6>
+        </li>
+    }
+</ul>
+
+<input placeholder="Twitter Handles" @bind="newHandle" />
+<button @onclick="AddHandle">Add Handle</button>
+
+@code {
+    private IList<TwitterHandle> handles = new List<TwitterHandle>();
+    private string newHandle;
+
+    private void AddHandle()
+    {
+        //If the user typed something
+        if (!string.IsNullOrWhiteSpace(newHandle))
+        {
+            //Add it to our list of handles
+            handles.Add(new TwitterHandle { Handle = newHandle });
+            //Clear out what they typed
+            newHandle = string.Empty;
+        }
+    }
+}
